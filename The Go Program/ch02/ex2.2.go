@@ -5,31 +5,23 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"heighconv"
+	"highconv"
 	"os"
 	"strconv"
 	"tempconv"
 )
 
-type Meters float64
-type Feet float64
-
-type Libras float64
-type Kg float64
-
-func MToF(m Meters) Feet {
-	return Feet(m * 2)
-}
-
-func FToM(f Feet) Meters {
-	return Meters(f / 3.280)
-}
-
-func LToK(l Libras) Kg {
-	return Kg(l / 0.4536)
-}
-
-func KToL(k Kg) Libras {
-	return Libras(k * 0.4536)
+func ProcessArgs(t float64) {
+	f := tempconv.Fahrenheit(t)
+	c := tempconv.Celsius(t)
+	m := highconv.Meters(t)
+	F := highconv.Feet(t)
+	l := heighconv.Libras(t)
+	k := heighconv.Kg(t)
+	fmt.Printf("%s = %s, %s = %s\n", f, tempconv.FToC(f), c, tempconv.CToF(c))
+	fmt.Printf("%s = %s, %s = %s\n", m, highconv.MToF(m), F, highconv.FToM(F))
+	fmt.Printf("%0.2f = %0.2f, %0.2f = %0.2f\n", l, heighconv.LToK(l), k, heighconv.KToL(k))
 }
 
 func main() {
@@ -42,15 +34,7 @@ func main() {
 				fmt.Fprintf(os.Stderr, "cf: %v\n", err)
 				os.Exit(1)
 			}
-			f := tempconv.Fahrenheit(t)
-			c := tempconv.Celsius(t)
-			m := Meters(t)
-			F := Feet(t)
-			l := Libras(t)
-			k := Kg(t)
-			fmt.Printf("%s = %s, %s = %s\n", f, tempconv.FToC(f), c, tempconv.CToF(c))
-			fmt.Printf("%0.2f = %0.2f, %0.2f = %0.2f\n", m, MToF(m), F, FToM(F))
-			fmt.Printf("%0.2f = %0.2f, %0.2f = %0.2f\n", l, LToK(l), k, KToL(k))
+			ProcessArgs(t)
 		}
 	} else {
 		for _, arg := range numbers {
@@ -59,15 +43,7 @@ func main() {
 				fmt.Fprintf(os.Stderr, "cf: %v\n", err)
 				os.Exit(1)
 			}
-			f := tempconv.Fahrenheit(t)
-			c := tempconv.Celsius(t)
-			m := Meters(t)
-			F := Feet(t)
-			l := Libras(t)
-			k := Kg(t)
-			fmt.Printf("%s = %s, %s = %s\n", f, tempconv.FToC(f), c, tempconv.CToF(c))
-			fmt.Printf("%0.2f = %0.2f, %0.2f = %0.2f\n", m, MToF(m), F, FToM(F))
-			fmt.Printf("%0.2f = %0.2f, %0.2f = %0.2f\n", l, LToK(l), k, KToL(k))
+			ProcessArgs(t)
 		}
 	}
 }
