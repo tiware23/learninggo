@@ -3,7 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"fmt"
-	"kubernetes/client"
+	"The Go Program/client"
 	"net/http"
 )
 
