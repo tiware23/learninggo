@@ -8,7 +8,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 func checkError(err error) {
@@ -46,11 +45,9 @@ func GetPod(uri string, token string) string {
 
 // PostPod gets information throught HttpMethod
 func PostPod(uri string, token string) int {
-	body, err := os.Open("pod.json")
-	checkError(err)
-	res := httpMethod("POST", uri, token, body)
-	defer body.Close()
-
+	jPod := GeneratePod("web", "nginx")
+	buf := bytes.NewReader(jPod)
+	res := httpMethod("POST", uri, token, buf)
 	return res.StatusCode
 
 }
